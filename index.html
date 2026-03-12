@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="windows-1252">
+    <meta http-equiv="Content-Language" content="en-us">
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Vapor Place - Product Catalog</title>
+    <meta name="description" content="Browse our full product catalog at The Vapor Place - Disposables, Salt Nic, Kits, Coils and more in Norwich CT">
+    <meta name="keywords" content="norwich ct vapor shop, norwich ct vape shop, disposables, salt nic, sub ohm, kits, coils, vape products">
+    <meta name="robots" content="index, follow">
+    <link rel="SHORTCUT ICON" href="http://www.thevapor.place/favicon.ico">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
+    <style>
+        a         { color: #000000; }
+        a:visited { color: #000000; }
+        a:active  { color: #000000; }
+        a:hover   { color: #FFFFFF; background-color: #000000; }
+
+        .auto-style7 { background-color: #BCE096; }
+        .auto-style8 { border-width: 0px; }
+
+        /* Catalog nav button styled to match existing oval buttons */
+        .catalog-nav-btn {
+            display: inline-block;
+            width: 125px;
+            height: 54px;
+            line-height: 50px;
+            text-align: center;
+            background: linear-gradient(180deg, #b8d478 0%, #8ab840 45%, #6a9820 100%);
+            border: 3px solid #3a5a08;
+            border-radius: 30px;
+            color: #1a3a00 !important;
+            font-size: 14px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+            text-decoration: none !important;
+            vertical-align: middle;
+            box-shadow: inset 0 1px 3px rgba(255,255,255,0.4), 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .catalog-nav-btn:hover {
+            background: linear-gradient(180deg, #c8e488 0%, #9ac850 45%, #7aa830 100%);
+            color: #fff !important;
+        }
+
+        .catalog-wrap {
+            padding: 16px 20px 30px 20px;
+            background: #fff;
+        }
+
+        .catalog-wrap h1 {
+            text-align: center;
+            font-size: 1.7em;
+            margin: 0 0 4px 0;
+            color: #1a3a00;
+        }
+
+        .catalog-subtitle {
+            text-align: center;
+            font-weight: normal;
+            font-size: 0.95em;
+            color: #555;
+            margin-bottom: 18px;
+        }
+
+        /* Filter bar */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            background: #BCE096;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 14px;
+        }
+
+        .filter-bar input[type=text] {
+            padding: 7px 14px;
+            border: 1px solid #888;
+            border-radius: 20px;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            min-width: 220px;
+        }
+
+        .filter-bar select {
+            padding: 7px 14px;
+            border: 1px solid #888;
+            border-radius: 20px;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            background: #fff;
+            cursor: pointer;
+        }
+
+        .filter-toggles {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .toggle-btn {
+            padding: 5px 14px;
+            border: 2px solid #3a5a08;
+            border-radius: 20px;
+            background: #fff;
+            color: #1a3a00;
+            font-size: 12px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .toggle-btn.active {
+            background: #3a5a08;
+            color: #fff;
+        }
+
+        .filter-sep {
+            color: #555;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        /* Stats */
+        .stats-bar {
+            text-align: center;
+            font-size: 13px;
+            color: #666;
+            font-weight: normal;
+            margin-bottom: 14px;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin: 16px 0 8px 0;
+            flex-wrap: wrap;
+        }
+        .page-btn {
+            padding: 5px 13px;
+            border: 2px solid #3a5a08;
+            border-radius: 16px;
+            background: #fff;
+            color: #1a3a00;
+            font-size: 13px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .page-btn.active { background: #3a5a08; color: #fff; }
+        .page-btn:disabled { opacity: 0.4; cursor: default; }
+        .page-info { font-size: 13px; color: #666; font-weight: normal; }
+
+        /* Product grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 12px;
+        }
+
+        .product-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 12px 14px;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.07);
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .product-card .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-bottom: 2px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 9px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        /* Category badge colors */
+        .badge-DISP  { background: #d4edda; color: #155724; }
+        .badge-SALT  { background: #fff3cd; color: #856404; }
+        .badge-SUB   { background: #cce5ff; color: #004085; }
+        .badge-KIT   { background: #e2d9f3; color: #4a235a; }
+        .badge-Coil  { background: #fde8d8; color: #7b3d00; }
+        .badge-Pod   { background: #d1ecf1; color: #0c5460; }
+        .badge-MOD   { background: #f5c6cb; color: #721c24; }
+        .badge-TANK  { background: #c3e6cb; color: #155724; }
+        .badge-ASSY  { background: #e2e3e5; color: #383d41; }
+        .badge-GW    { background: #ffeeba; color: #856404; }
+        .badge-SA    { background: #d6eaf8; color: #1a5276; }
+        .badge-CBD   { background: #d5f5e3; color: #1e8449; }
+        .badge-RDA   { background: #fadbd8; color: #922b21; }
+        .badge-RTA   { background: #f9ebea; color: #922b21; }
+        .badge-PFPOD { background: #eaf2ff; color: #1a5276; }
+        .badge-misc  { background: #f0f0f0; color: #555; }
+
+        .badge-sale      { background: #ffeeba; color: #856404; }
+        .badge-clearance { background: #f8d7da; color: #721c24; }
+        .badge-oos       { background: #e2e3e5; color: #383d41; }
+
+        .product-name {
+            font-size: 0.88em;
+            line-height: 1.4;
+            color: #222;
+        }
+
+        .product-variation {
+            font-size: 11px;
+            color: #777;
+            font-weight: normal;
+            font-style: italic;
+        }
+
+        .product-price {
+            font-size: 14px;
+            color: #1a3a00;
+            font-weight: bold;
+            margin-top: 2px;
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            color: #888;
+            font-weight: normal;
+        }
+
+        .warning-block {
+            text-align: center;
+            font-size: large;
+            font-weight: bold;
+            padding: 8px 0 4px 0;
+        }
+    </style>
+</head>
+
+<body topmargin="0" leftmargin="0" bgcolor="#100E0C" style="font-family: Arial; font-weight: bold; background-image: url('../images/vapor-bg.jpg'); background-attachment: fixed;">
+
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v5.0"></script>
+
+<div align="center">
+<center>
+<table border="0" cellspacing="0" width="1000" cellpadding="0" bgcolor="#FFFFFF" style="border-collapse: collapse">
+
+    <!-- Logo -->
+    <tr>
+        <td width="100%" class="auto-style7">
+            <p align="center">
+            <a href="http://www.thevapor.place/" title="The Vapor Place">
+            <img alt="The Vapor Place" height="288" src="../images/the-vapor-place-cloud-logo.jpg" width="1000" style="border-width: 0px"></a>
+            </p>
+        </td>
+    </tr>
+
+    <!-- Black spacer -->
+    <tr>
+        <td width="100%" bgcolor="#100E0C" height="18">&nbsp;</td>
+    </tr>
+
+    <!-- Nav -->
+    <tr>
+        <td width="100%">
+            <p style="margin-top: 5px; margin-bottom: 0; text-align: center;">
+            <a href="vapor.php" title="Home"><img alt="Home" class="auto-style8" height="54" src="images/buttons/button-home.jpg" width="125"></a><a href="about.php" title="About"><img alt="About" class="auto-style8" height="54" src="images/buttons/button-about.jpg" width="125"></a><a href="menus.php" title="Menu"><img alt="Menu" class="auto-style8" height="54" src="images/buttons/button-menu.jpg" width="125"></a><a href="location.php" title="Location"><img alt="Location" class="auto-style8" height="54" src="images/buttons/button-location.jpg" width="125"></a><a href="contact.php" title="Contact"><img alt="Contact" class="auto-style8" height="54" src="images/buttons/button-contact.jpg" width="125"></a><a href="catalog.php" title="Catalog" class="catalog-nav-btn">Catalog</a>
+            </p>
+        </td>
+    </tr>
+
+    <!-- Warning + Catalog -->
+    <tr>
+        <td width="100%">
+            <div class="warning-block">
+                <br>The Vapor Place is a 21+ Establishment. Valid I.D. required to enter store.<br>
+                WARNING: Some products contain nicotine. Nicotine is an addictive chemical.
+            </div>
+
+            <div class="catalog-wrap">
+                <h1>Product Catalog</h1>
+                <p class="catalog-subtitle">Browse our in-store inventory &mdash; visit us to purchase.</p>
+
+                <div class="filter-bar">
+                    <input type="text" id="searchInput" placeholder="Search products..." oninput="onFilterChange()">
+
+                    <select id="categoryFilter" onchange="onFilterChange()">
+                        <option value="">All Categories</option>
+                    </select>
+
+                    <div class="filter-toggles">
+                        <span class="filter-sep">Show:</span>
+                        <button class="toggle-btn" id="toggleSale"      onclick="toggleFilter('sale')">On Sale</button>
+                        <button class="toggle-btn" id="toggleClearance" onclick="toggleFilter('clearance')">Clearance</button>
+                        <button class="toggle-btn" id="toggleInStock"   onclick="toggleFilter('instock')">In Stock Only</button>
+                    </div>
+                </div>
+
+                <div class="stats-bar" id="statsBar">Loading products...</div>
+                <div class="pagination" id="paginationTop"></div>
+                <div class="product-grid" id="productGrid"></div>
+                <div class="pagination" id="paginationBottom"></div>
+            </div>
+        </td>
+    </tr>
+
+    <!-- Footer -->
+    <tr>
+        <td>
+        <table cellpadding="0" cellspacing="0" style="width: 1000px; background-color: #BCE096;" align="center">
+            <tr>
+                <td style="text-align: center" colspan="3">
+                    <p align="center" style="margin-top: 0; margin-bottom: 0">&nbsp;</p>
+                    <p align="center" style="margin-top: 0; margin-bottom: 0">Norwich Location Hours</p>
+                    <p align="center" style="margin-top: 0; margin-bottom: 0">Mon - Thur &amp; Sat 10:00am - 7:00pm</p>
+                    <p align="center" style="margin-top: 0; margin-bottom: 0">Fri. 10:00am - 8:00pm</p>
+                    <p align="center" style="margin-top: 0; margin-bottom: 0">Sun 11:00am - 5:00pm</p>
+                    <p align="center" style="margin-top: 0; margin-bottom: 0">&nbsp;</p>
+                    <p align="center" style="margin-top: 0; margin-bottom: 0">Groton Location Hours (Drive Thru Only)</p>
+                    <p align="center" style="margin-top: 0; margin-bottom: 0">Mon - Sat 10:00am - 8:00pm</p>
+                    <p align="center" style="margin-top: 0; margin-bottom: 0">Sun 11:00am - 6:00pm</p>
+                    <p align="center" style="margin-top: 0; margin-bottom: 0">&nbsp;</p>
+                    <p align="center" style="margin-top: 0; margin-bottom: 0">Uncasville Location Hours</p>
+                    <p align="center" style="margin-top: 0; margin-bottom: 0">Mon - Sat 10:00am - 6:00pm</p>
+                    <p align="center" style="margin-top: 0; margin-bottom: 0">Sun 10:00am - 3:00pm</p>
+                    <p align="center" style="margin-top: 0; margin-bottom: 0">&nbsp;</p>
+                    <img alt="The Vapor Place" src="images/tvp-bottom.jpg" style="height: 150px; width: 520px"><br><br><br><br>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: center; background-color: #FFFFFF;">
+                    <a href="https://www.facebook.com/thevaporplacect/" target="_blank" title="Facebook">
+                    <img alt="Facebook" src="../images/facebook.jpg" style="height: 30px; width: 30px; border-width: 0px"></a>
+                </td>
+                <td style="text-align: center;">
+                    <span style="font-size: x-small;"><br>Copyright &copy; <a href="http://www.thevapor.place/" title="The Vapor Place">www.TheVapor.place</a></span><br><br><br>
+                </td>
+                <td style="text-align: center; background-color: #FFFFFF;">
+                    <a href="https://instagram.com/thevaporplacect/" target="_blank" title="Instagram">
+                    <img alt="Instagram" src="../images/instagram-logo.jpg" style="height: 26px; width: 30px; border-width: 0px"></a>
+                </td>
+            </tr>
+        </table>
+        </td>
+    </tr>
+
+</table>
+</center>
+</div>
+
+<script>
+    var allProducts  = [];
+    var filtered     = [];
+    var currentPage  = 1;
+    var PAGE_SIZE    = 60;
+    var activeFilters = { sale: false, clearance: false, instock: false };
+
+    // Human-readable category labels
+    var CAT_LABELS = {
+        'DISP':  'Disposable',
+        'SALT':  'Salt Nic',
+        'SUB':   'Sub-Ohm Juice',
+        'KIT':   'Starter Kit',
+        'Coil':  'Coil',
+        'Pod':   'Pod',
+        'MOD':   'Mod',
+        'TANK':  'Tank',
+        'ASSY':  'Accessory',
+        'GW':    'Glass & Water',
+        'SA':    'Smoking Access.',
+        'CBD':   'CBD',
+        'RDA':   'RDA',
+        'RTA':   'RTA',
+        'PFPOD': 'Pre-filled Pod',
+        'D8':    'Delta 8',
+        'D9':    'Delta 9',
+        'D10':   'Delta 10',
+        'D11':   'CBN',
+        'D12':   'Delta 8',
+        'D13':   'Delta 8',
+        'SW':    'Special',
+        'Misc.': 'Misc.',
+        '':      'Other'
+    };
+
+    function catLabel(cat) {
+        return CAT_LABELS[cat] || cat;
+    }
+
+    function badgeClass(cat) {
+        var known = ['DISP','SALT','SUB','KIT','Coil','Pod','MOD','TANK','ASSY','GW','SA','CBD','RDA','RTA','PFPOD'];
+        return known.indexOf(cat) >= 0 ? 'badge-' + cat : 'badge-misc';
+    }
+
+    function toggleFilter(name) {
+        activeFilters[name] = !activeFilters[name];
+        var id = 'toggle' + name.charAt(0).toUpperCase() + name.slice(1);
+        document.getElementById(id).classList.toggle('active', activeFilters[name]);
+        onFilterChange();
+    }
+
+    Papa.parse("products.csv", {
+        header: true,
+        download: true,
+        skipEmptyLines: true,
+        complete: function(results) {
+            allProducts = results.data.filter(function(r) { return r.Item; });
+
+            // Build category dropdown from actual data
+            var cats = {};
+            allProducts.forEach(function(p) { cats[p.Category] = true; });
+            var catSel = document.getElementById('categoryFilter');
+            Object.keys(cats).sort(function(a,b) {
+                // Sort by count descending
+                var ca = allProducts.filter(function(p){return p.Category===a;}).length;
+                var cb = allProducts.filter(function(p){return p.Category===b;}).length;
+                return cb - ca;
+            }).forEach(function(cat) {
+                var opt = document.createElement('option');
+                opt.value = cat;
+                opt.textContent = catLabel(cat) + ' (' + allProducts.filter(function(p){return p.Category===cat;}).length + ')';
+                catSel.appendChild(opt);
+            });
+
+            onFilterChange();
+        }
+    });
+
+    function onFilterChange() {
+        currentPage = 1;
+        applyFilters();
+    }
+
+    function applyFilters() {
+        var search   = document.getElementById('searchInput').value.toLowerCase().trim();
+        var category = document.getElementById('categoryFilter').value;
+
+        filtered = allProducts.filter(function(p) {
+            if (category && p.Category !== category) return false;
+            if (activeFilters.sale      && p.OnSale    !== 'Y') return false;
+            if (activeFilters.clearance && p.Clearance !== 'Y') return false;
+            if (activeFilters.instock   && p.InStock   !== 'Y') return false;
+            if (search) {
+                var haystack = (p.Item + ' ' + (p.Variation||'')).toLowerCase();
+                var terms = search.split(' ').filter(function(t){ return t; });
+                for (var i = 0; i < terms.length; i++) {
+                    if (haystack.indexOf(terms[i]) === -1) return false;
+                }
+            }
+            return true;
+        });
+
+        renderPage();
+    }
+
+    function renderPage() {
+        var total  = filtered.length;
+        var pages  = Math.ceil(total / PAGE_SIZE);
+        if (currentPage > pages) currentPage = 1;
+
+        var start = (currentPage - 1) * PAGE_SIZE;
+        var slice = filtered.slice(start, start + PAGE_SIZE);
+
+        // Stats
+        document.getElementById('statsBar').textContent =
+            'Showing ' + (total === 0 ? 0 : start + 1) + '-' + Math.min(start + PAGE_SIZE, total) +
+            ' of ' + total + ' products';
+
+        // Grid
+        var grid = document.getElementById('productGrid');
+        grid.innerHTML = '';
+
+        if (slice.length === 0) {
+            grid.innerHTML = '<div class="no-results">No products found &mdash; try adjusting your filters.</div>';
+        } else {
+            slice.forEach(function(p) {
+                var card = document.createElement('div');
+                card.className = 'product-card';
+
+                var badges = '<span class="badge ' + badgeClass(p.Category) + '">' + catLabel(p.Category) + '</span>';
+                if (p.OnSale    === 'Y') badges += ' <span class="badge badge-sale">On Sale</span>';
+                if (p.Clearance === 'Y') badges += ' <span class="badge badge-clearance">Clearance</span>';
+                if (p.InStock   !== 'Y') badges += ' <span class="badge badge-oos">Out of Stock</span>';
+
+                card.innerHTML =
+                    '<div class="badges">' + badges + '</div>' +
+                    '<div class="product-name">' + escHtml(p.Item) + '</div>' +
+                    (p.Variation ? '<div class="product-variation">' + escHtml(p.Variation) + '</div>' : '') +
+                    (p.Price     ? '<div class="product-price">$' + parseFloat(p.Price).toFixed(2) + '</div>' : '');
+
+                grid.appendChild(card);
+            });
+        }
+
+        buildPagination(pages);
+    }
+
+    function buildPagination(pages) {
+        var html = '';
+        if (pages <= 1) {
+            document.getElementById('paginationTop').innerHTML = '';
+            document.getElementById('paginationBottom').innerHTML = '';
+            return;
+        }
+
+        html += '<button class="page-btn" onclick="goPage(' + (currentPage-1) + ')"' + (currentPage===1?' disabled':'') + '>&laquo; Prev</button>';
+
+        // Show window of pages around current
+        var start = Math.max(1, currentPage - 3);
+        var end   = Math.min(pages, currentPage + 3);
+        if (start > 1) html += '<button class="page-btn" onclick="goPage(1)">1</button>' + (start > 2 ? '<span class="page-info">...</span>' : '');
+        for (var i = start; i <= end; i++) {
+            html += '<button class="page-btn' + (i===currentPage?' active':'') + '" onclick="goPage('+i+')">' + i + '</button>';
+        }
+        if (end < pages) html += (end < pages-1 ? '<span class="page-info">...</span>' : '') + '<button class="page-btn" onclick="goPage('+pages+')">'+pages+'</button>';
+
+        html += '<button class="page-btn" onclick="goPage(' + (currentPage+1) + ')"' + (currentPage===pages?' disabled':'') + '>Next &raquo;</button>';
+        html += '<span class="page-info">Page ' + currentPage + ' of ' + pages + '</span>';
+
+        document.getElementById('paginationTop').innerHTML    = html;
+        document.getElementById('paginationBottom').innerHTML = html;
+    }
+
+    function goPage(n) {
+        currentPage = n;
+        renderPage();
+        window.scrollTo(0, 0);
+    }
+
+    function escHtml(str) {
+        return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+</script>
+
+</body>
+</html>
