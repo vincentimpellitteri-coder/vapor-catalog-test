@@ -19,32 +19,76 @@
         a:active  { color: #000000; }
         a:hover   { color: #FFFFFF; background-color: #000000; }
 
-        .auto-style7 { background-color: #BCE096; }
+        /* ── Fireworks canvas ── */
+        #fireworks-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* ── Balloons ── */
+        .balloon {
+            position: fixed;
+            bottom: -120px;
+            font-size: 48px;
+            animation: floatUp linear infinite;
+            pointer-events: none;
+            z-index: 9998;
+            user-select: none;
+        }
+        @keyframes floatUp {
+            0%   { bottom: -120px; opacity: 1;   transform: translateX(0) rotate(-5deg); }
+            50%  { transform: translateX(30px)  rotate(5deg); }
+            100% { bottom: 110%;   opacity: 0.2; transform: translateX(-20px) rotate(-3deg); }
+        }
+
+        /* ── Semiquincentennial banner ── */
+        .semi-banner {
+            background: linear-gradient(135deg, #8B0000 0%, #6A1B9A 50%, #8B0000 100%);
+            color: #FFD700;
+            text-align: center;
+            padding: 10px 16px;
+            font-size: 1.05em;
+            font-weight: bold;
+            letter-spacing: 0.06em;
+            border-bottom: 3px solid #FFD700;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+        }
+        .semi-banner .stars {
+            font-size: 1.1em;
+            letter-spacing: 4px;
+        }
+
+        /* ── Header background ── */
+        .auto-style7 { background: linear-gradient(180deg, #4a0060 0%, #8B0000 100%); }
         .auto-style8 { border-width: 0px; }
 
-        /* Catalog nav button styled to match existing oval buttons */
+        /* ── Catalog nav button ── */
         .catalog-nav-btn {
             display: inline-block;
             width: 125px;
             height: 54px;
             line-height: 50px;
             text-align: center;
-            background: linear-gradient(180deg, #b8d478 0%, #8ab840 45%, #6a9820 100%);
-            border: 3px solid #3a5a08;
+            background: linear-gradient(180deg, #d44 0%, #aa0000 50%, #800000 100%);
+            border: 3px solid #FFD700;
             border-radius: 30px;
-            color: #1a3a00 !important;
+            color: #FFD700 !important;
             font-size: 14px;
             font-weight: bold;
             font-family: Arial, sans-serif;
             text-decoration: none !important;
             vertical-align: middle;
-            box-shadow: inset 0 1px 3px rgba(255,255,255,0.4), 0 2px 4px rgba(0,0,0,0.3);
+            box-shadow: inset 0 1px 3px rgba(255,255,255,0.3), 0 2px 6px rgba(0,0,0,0.4);
         }
         .catalog-nav-btn:hover {
-            background: linear-gradient(180deg, #c8e488 0%, #9ac850 45%, #7aa830 100%);
+            background: linear-gradient(180deg, #e66 0%, #cc1111 50%, #990000 100%);
             color: #fff !important;
         }
 
+        /* ── Catalog wrap ── */
         .catalog-wrap {
             padding: 16px 20px 30px 20px;
             background: #fff;
@@ -53,8 +97,11 @@
         .catalog-wrap h1 {
             text-align: center;
             font-size: 1.7em;
-            margin: 0 0 4px 0;
-            color: #1a3a00;
+            margin: 0 0 2px 0;
+            background: linear-gradient(90deg, #8B0000, #6A1B9A, #8B0000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .catalog-subtitle {
@@ -65,22 +112,23 @@
             margin-bottom: 18px;
         }
 
-        /* Filter bar */
+        /* ── Filter bar ── */
         .filter-bar {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             justify-content: center;
             align-items: center;
-            background: #BCE096;
+            background: linear-gradient(135deg, #8B0000 0%, #6A1B9A 100%);
             border-radius: 8px;
             padding: 12px 16px;
             margin-bottom: 14px;
+            border: 2px solid #FFD700;
         }
 
         .filter-bar input[type=text] {
             padding: 7px 14px;
-            border: 1px solid #888;
+            border: 2px solid #8B0000;
             border-radius: 20px;
             font-size: 14px;
             font-family: Arial, sans-serif;
@@ -89,7 +137,7 @@
 
         .filter-bar select {
             padding: 7px 14px;
-            border: 1px solid #888;
+            border: 2px solid #8B0000;
             border-radius: 20px;
             font-size: 14px;
             font-family: Arial, sans-serif;
@@ -106,36 +154,36 @@
 
         .toggle-btn {
             padding: 5px 14px;
-            border: 2px solid #3a5a08;
+            border: 2px solid #FFD700;
             border-radius: 20px;
-            background: #fff;
-            color: #1a3a00;
+            background: rgba(255,255,255,0.15);
+            color: #FFD700;
             font-size: 12px;
             font-family: Arial, sans-serif;
             font-weight: bold;
             cursor: pointer;
         }
         .toggle-btn.active {
-            background: #3a5a08;
-            color: #fff;
+            background: #FFD700;
+            color: #8B0000;
         }
 
         .filter-sep {
-            color: #555;
+            color: #FFD700;
             font-weight: bold;
             font-size: 13px;
         }
 
-        /* Stats */
+        /* ── Stats ── */
         .stats-bar {
             text-align: center;
             font-size: 13px;
-            color: #666;
-            font-weight: normal;
+            color: #6A1B9A;
+            font-weight: bold;
             margin-bottom: 14px;
         }
 
-        /* Pagination */
+        /* ── Pagination ── */
         .pagination {
             display: flex;
             justify-content: center;
@@ -146,20 +194,20 @@
         }
         .page-btn {
             padding: 5px 13px;
-            border: 2px solid #3a5a08;
+            border: 2px solid #8B0000;
             border-radius: 16px;
             background: #fff;
-            color: #1a3a00;
+            color: #8B0000;
             font-size: 13px;
             font-family: Arial, sans-serif;
             font-weight: bold;
             cursor: pointer;
         }
-        .page-btn.active { background: #3a5a08; color: #fff; }
+        .page-btn.active { background: #8B0000; color: #FFD700; }
         .page-btn:disabled { opacity: 0.4; cursor: default; }
-        .page-info { font-size: 13px; color: #666; font-weight: normal; }
+        .page-info { font-size: 13px; color: #6A1B9A; font-weight: normal; }
 
-        /* Product grid */
+        /* ── Product grid ── */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
@@ -171,10 +219,15 @@
             border-radius: 8px;
             padding: 12px 14px;
             background: #fff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.07);
+            box-shadow: 0 2px 5px rgba(139,0,0,0.1);
             display: flex;
             flex-direction: column;
             gap: 5px;
+            transition: box-shadow 0.2s;
+        }
+        .product-card:hover {
+            box-shadow: 0 4px 12px rgba(106,27,154,0.2);
+            border-color: #c084fc;
         }
 
         .product-card .badges {
@@ -194,26 +247,25 @@
             letter-spacing: 0.04em;
         }
 
-        /* Category badge colors */
-        .badge-DISP  { background: #d4edda; color: #155724; }
-        .badge-SALT  { background: #fff3cd; color: #856404; }
-        .badge-SUB   { background: #cce5ff; color: #004085; }
-        .badge-KIT   { background: #e2d9f3; color: #4a235a; }
-        .badge-Coil  { background: #fde8d8; color: #7b3d00; }
-        .badge-Pod   { background: #d1ecf1; color: #0c5460; }
-        .badge-MOD   { background: #f5c6cb; color: #721c24; }
-        .badge-TANK  { background: #c3e6cb; color: #155724; }
-        .badge-ASSY  { background: #e2e3e5; color: #383d41; }
-        .badge-GW    { background: #ffeeba; color: #856404; }
-        .badge-SA    { background: #d6eaf8; color: #1a5276; }
-        .badge-CBD   { background: #d5f5e3; color: #1e8449; }
-        .badge-RDA   { background: #fadbd8; color: #922b21; }
-        .badge-RTA   { background: #f9ebea; color: #922b21; }
-        .badge-PFPOD { background: #eaf2ff; color: #1a5276; }
+        .badge-DISP  { background: #fde8e8; color: #8B0000; }
+        .badge-SALT  { background: #f3e8ff; color: #6A1B9A; }
+        .badge-SUB   { background: #e8eaff; color: #3730a3; }
+        .badge-KIT   { background: #fce7f3; color: #9d174d; }
+        .badge-Coil  { background: #fef3c7; color: #92400e; }
+        .badge-Pod   { background: #d1fae5; color: #065f46; }
+        .badge-MOD   { background: #fee2e2; color: #991b1b; }
+        .badge-TANK  { background: #dbeafe; color: #1e40af; }
+        .badge-ASSY  { background: #f3f4f6; color: #374151; }
+        .badge-GW    { background: #fef9c3; color: #713f12; }
+        .badge-SA    { background: #ede9fe; color: #5b21b6; }
+        .badge-CBD   { background: #d1fae5; color: #065f46; }
+        .badge-RDA   { background: #fee2e2; color: #991b1b; }
+        .badge-RTA   { background: #fce7f3; color: #9d174d; }
+        .badge-PFPOD { background: #e0f2fe; color: #075985; }
         .badge-misc  { background: #f0f0f0; color: #555; }
 
-        .badge-sale      { background: #ffeeba; color: #856404; }
-        .badge-clearance { background: #f8d7da; color: #721c24; }
+        .badge-sale      { background: #FFD700; color: #8B0000; }
+        .badge-clearance { background: #8B0000; color: #FFD700; }
         .badge-oos       { background: #e2e3e5; color: #383d41; }
 
         .product-name {
@@ -231,7 +283,7 @@
 
         .product-price {
             font-size: 14px;
-            color: #1a3a00;
+            color: #8B0000;
             font-weight: bold;
             margin-top: 2px;
         }
@@ -249,14 +301,35 @@
             font-size: large;
             font-weight: bold;
             padding: 8px 0 4px 0;
+            background: #fff8f8;
+            border-bottom: 2px solid #8B0000;
+        }
+
+        /* ── Footer ── */
+        .footer-table {
+            background: linear-gradient(135deg, #4a0060 0%, #8B0000 100%) !important;
+            color: #FFD700;
+        }
+        .footer-table p, .footer-table span, .footer-table a {
+            color: #FFD700 !important;
         }
     </style>
 </head>
 
-<body topmargin="0" leftmargin="0" bgcolor="#100E0C" style="font-family: Arial; font-weight: bold; background-image: url('../images/vapor-bg.jpg'); background-attachment: fixed;">
+<body topmargin="0" leftmargin="0" bgcolor="#1a0020" style="font-family: Arial; font-weight: bold; background: radial-gradient(ellipse at center, #1a0020 0%, #0d0010 100%); min-height: 100vh;">
+
+<!-- Fireworks canvas -->
+<canvas id="fireworks-canvas"></canvas>
 
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v5.0"></script>
+
+<!-- Semiquincentennial banner -->
+<div class="semi-banner">
+    <div class="stars">&#9733; &#9733; &#9733; &#9733; &#9733; &#9733; &#9733; &#9733; &#9733; &#9733; &#9733; &#9733; &#9733;</div>
+    &#127881; Celebrating America's 250th Anniversary &mdash; July 4th, 2026 &mdash; Semiquincentennial &#127881;
+    <div class="stars">&#9733; &#9733; &#9733; &#9733; &#9733; &#9733; &#9733; &#9733; &#9733; &#9733; &#9733; &#9733; &#9733;</div>
+</div>
 
 <div align="center">
 <center>
@@ -324,7 +397,7 @@
     <!-- Footer -->
     <tr>
         <td>
-        <table cellpadding="0" cellspacing="0" style="width: 1000px; background-color: #BCE096;" align="center">
+        <table cellpadding="0" cellspacing="0" class="footer-table" style="width: 1000px; background: linear-gradient(135deg, #4a0060 0%, #8B0000 100%);" align="center">
             <tr>
                 <td style="text-align: center" colspan="3">
                     <p align="center" style="margin-top: 0; margin-bottom: 0">&nbsp;</p>
@@ -547,6 +620,175 @@
     function escHtml(str) {
         return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
+</script>
+
+<!-- ═══════════════════════════════════════════════
+     FIREWORKS ENGINE
+═══════════════════════════════════════════════ -->
+<script>
+(function() {
+    var canvas = document.getElementById('fireworks-canvas');
+    var ctx    = canvas.getContext('2d');
+    var W, H;
+
+    function resize() {
+        W = canvas.width  = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Patriotic + purple palette
+    var COLORS = [
+        '#FF2222','#FF6666','#FFD700','#FFFFFF',
+        '#CC00CC','#9933FF','#FF33AA','#FF9900',
+        '#AA00FF','#FF4444','#FFAAAA','#FFD700'
+    ];
+
+    var particles = [];
+    var rockets    = [];
+
+    function Rocket() {
+        this.x  = W * (0.1 + Math.random() * 0.8);
+        this.y  = H;
+        this.vy = -(Math.random() * 6 + 8);
+        this.vx = (Math.random() - 0.5) * 2;
+        this.targetY = H * (0.1 + Math.random() * 0.45);
+        this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
+        this.trail  = [];
+    }
+
+    Rocket.prototype.update = function() {
+        this.trail.push({x: this.x, y: this.y});
+        if (this.trail.length > 8) this.trail.shift();
+        this.x += this.vx;
+        this.y += this.vy;
+        this.vy += 0.18;
+        return this.y <= this.targetY || this.vy >= 0;
+    };
+
+    Rocket.prototype.draw = function() {
+        for (var i = 0; i < this.trail.length; i++) {
+            ctx.beginPath();
+            ctx.arc(this.trail[i].x, this.trail[i].y, 1.5, 0, Math.PI*2);
+            ctx.fillStyle = this.color;
+            ctx.globalAlpha = i / this.trail.length * 0.6;
+            ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 3, 0, Math.PI*2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+    };
+
+    function explode(x, y, color) {
+        var count  = 80 + Math.floor(Math.random() * 60);
+        var second = COLORS[Math.floor(Math.random() * COLORS.length)];
+        for (var i = 0; i < count; i++) {
+            var angle = (Math.PI * 2 / count) * i + (Math.random() - 0.5) * 0.3;
+            var speed = 1.5 + Math.random() * 5;
+            particles.push({
+                x: x, y: y,
+                vx: Math.cos(angle) * speed,
+                vy: Math.sin(angle) * speed,
+                alpha: 1,
+                color: Math.random() < 0.4 ? second : color,
+                size: 1 + Math.random() * 2.5,
+                gravity: 0.06 + Math.random() * 0.08,
+                decay: 0.012 + Math.random() * 0.015,
+                trail: []
+            });
+        }
+    }
+
+    var lastRocket = 0;
+    var rocketInterval = 900;
+
+    function loop(ts) {
+        requestAnimationFrame(loop);
+        ctx.fillStyle = 'rgba(0,0,0,0.18)';
+        ctx.fillRect(0, 0, W, H);
+
+        // Launch rockets
+        if (ts - lastRocket > rocketInterval) {
+            rockets.push(new Rocket());
+            lastRocket = ts;
+            rocketInterval = 600 + Math.random() * 1200;
+        }
+
+        // Update rockets
+        rockets = rockets.filter(function(r) {
+            if (r.update()) {
+                explode(r.x, r.y, r.color);
+                return false;
+            }
+            r.draw();
+            return true;
+        });
+
+        // Update particles
+        particles = particles.filter(function(p) {
+            p.trail.push({x: p.x, y: p.y});
+            if (p.trail.length > 4) p.trail.shift();
+            p.x  += p.vx;
+            p.y  += p.vy;
+            p.vy += p.gravity;
+            p.vx *= 0.98;
+            p.alpha -= p.decay;
+
+            if (p.alpha <= 0) return false;
+
+            // Trail
+            for (var t = 0; t < p.trail.length; t++) {
+                ctx.beginPath();
+                ctx.arc(p.trail[t].x, p.trail[t].y, p.size * 0.5, 0, Math.PI*2);
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = p.alpha * (t / p.trail.length) * 0.4;
+                ctx.fill();
+            }
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+            ctx.fillStyle = p.color;
+            ctx.globalAlpha = p.alpha;
+            ctx.fill();
+            ctx.globalAlpha = 1;
+            return true;
+        });
+    }
+    requestAnimationFrame(loop);
+})();
+</script>
+
+<!-- ═══════════════════════════════════════════════
+     FLOATING BALLOONS
+═══════════════════════════════════════════════ -->
+<script>
+(function() {
+    var balloons = ['🎈','🎆','🎇','🎉','🎊','🎈','🎆','🎈'];
+    var colors   = ['#FF0000','#CC00FF','#FF33AA','#FFD700','#FF6600','#AA00FF'];
+
+    function spawnBalloon() {
+        var el = document.createElement('div');
+        el.className = 'balloon';
+        el.textContent = balloons[Math.floor(Math.random() * balloons.length)];
+        el.style.left     = (5 + Math.random() * 90) + '%';
+        el.style.fontSize = (32 + Math.random() * 32) + 'px';
+        var dur = 7 + Math.random() * 10;
+        el.style.animationDuration  = dur + 's';
+        el.style.animationDelay     = (Math.random() * 3) + 's';
+        document.body.appendChild(el);
+        setTimeout(function() { el.remove(); }, (dur + 3) * 1000);
+    }
+
+    // Initial burst
+    for (var i = 0; i < 8; i++) {
+        setTimeout(spawnBalloon, i * 400);
+    }
+    // Ongoing
+    setInterval(spawnBalloon, 2500);
+})();
 </script>
 
 </body>
