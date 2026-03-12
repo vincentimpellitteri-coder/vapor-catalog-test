@@ -91,14 +91,14 @@
         /* ── Catalog wrap ── */
         .catalog-wrap {
             padding: 16px 20px 30px 20px;
-            background: #fff;
+            background: #000000;
         }
 
         .catalog-wrap h1 {
             text-align: center;
             font-size: 1.7em;
             margin: 0 0 2px 0;
-            background: linear-gradient(90deg, #8B0000, #6A1B9A, #8B0000);
+            background: linear-gradient(90deg, #ff6666, #cc88ff, #ff6666);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -108,7 +108,7 @@
             text-align: center;
             font-weight: normal;
             font-size: 0.95em;
-            color: #555;
+            color: #aaaaaa;
             margin-bottom: 18px;
         }
 
@@ -178,7 +178,7 @@
         .stats-bar {
             text-align: center;
             font-size: 13px;
-            color: #6A1B9A;
+            color: #cc88ff;
             font-weight: bold;
             margin-bottom: 14px;
         }
@@ -194,18 +194,18 @@
         }
         .page-btn {
             padding: 5px 13px;
-            border: 2px solid #8B0000;
+            border: 2px solid #CC0000;
             border-radius: 16px;
-            background: #fff;
-            color: #8B0000;
+            background: #1a1a1a;
+            color: #ff9999;
             font-size: 13px;
             font-family: Arial, sans-serif;
             font-weight: bold;
             cursor: pointer;
         }
-        .page-btn.active { background: #8B0000; color: #FFD700; }
+        .page-btn.active { background: #CC0000; color: #FFD700; }
         .page-btn:disabled { opacity: 0.4; cursor: default; }
-        .page-info { font-size: 13px; color: #6A1B9A; font-weight: normal; }
+        .page-info { font-size: 13px; color: #cc88ff; font-weight: normal; }
 
         /* ── Product grid ── */
         .product-grid {
@@ -215,19 +215,19 @@
         }
 
         .product-card {
-            border: 1px solid #ddd;
+            border: 1px solid #333;
             border-radius: 8px;
             padding: 12px 14px;
-            background: #fff;
-            box-shadow: 0 2px 5px rgba(139,0,0,0.1);
+            background: #111111;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.4);
             display: flex;
             flex-direction: column;
             gap: 5px;
-            transition: box-shadow 0.2s;
+            transition: box-shadow 0.2s, border-color 0.2s;
         }
         .product-card:hover {
-            box-shadow: 0 4px 12px rgba(106,27,154,0.2);
-            border-color: #c084fc;
+            box-shadow: 0 4px 14px rgba(200,100,255,0.3);
+            border-color: #9933ff;
         }
 
         .product-card .badges {
@@ -271,19 +271,19 @@
         .product-name {
             font-size: 0.88em;
             line-height: 1.4;
-            color: #222;
+            color: #eeeeee;
         }
 
         .product-variation {
             font-size: 11px;
-            color: #777;
+            color: #aaaaaa;
             font-weight: normal;
             font-style: italic;
         }
 
         .product-price {
             font-size: 14px;
-            color: #8B0000;
+            color: #FFD700;
             font-weight: bold;
             margin-top: 2px;
         }
@@ -292,7 +292,7 @@
             grid-column: 1 / -1;
             text-align: center;
             padding: 40px;
-            color: #888;
+            color: #aaaaaa;
             font-weight: normal;
         }
 
